@@ -1,28 +1,53 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Index from '@/pages/index.vue'
-import Home from '@/pages/home/home.vue'
-import Product from '@/pages/product/product.vue'
-import Contact from '@/pages/contact/contact.vue'
-import Details from '@/pages/details/details.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Layout from '../Layout';
 
+Vue.use(VueRouter);
 
-Vue.use(Router)
+const routes = [
+  {
+    path: '',
+    name: 'layout',
+    component: Layout,
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: () => import("../views/Home.vue")
+      },
+      {
+        path: "/collection",
+        name: "collection",
+        component: () => import("../views/collection.vue")
+      },
+      {
+        path: "/buy",
+        name: "buy",
+        component: () => import("../views/buy.vue")
+      },
+      {
+        path: "/order",
+        name: "order",
+        component: () => import("../views/order.vue")
+      },
+      {
+        path: "/orderdetails",
+        name: "orderdetails",
+        component: () => import("../views/orderdetails.vue")
+      },
+      {
+        path: "/management",
+        name: "management",
+        component: () => import("../views/management.vue")
+      }
+    ]
+  }
+];
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Index',
-      redirect: '/home',
-      component: Index,
-      children: [
-        {path: 'home', name: 'Home', component: Home},
-        {path: 'product', name: 'Product', component: Product},
-        {path: 'contact', name: 'Contact', component: Contact},
-        {path: 'details', name: 'Details', component: Details}
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
+});
 
-      ]
-    }
-  ]
-})
+export default router;
